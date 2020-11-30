@@ -1,7 +1,7 @@
 import React from 'react';
 import Slide from './Slide';
 
-export const Slides = props => {
+const Slides = props => {
   const { slides } = props;
   return (
     <div className="slides-container">
@@ -11,3 +11,5 @@ export const Slides = props => {
     </div>
   );
 };
+
+export default Slides;
