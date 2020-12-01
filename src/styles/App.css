@@ -1,0 +1,24 @@
+.carousel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+
+.slides {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.slide {
+  display: none;
+  position: relative;
+  margin: 0 auto;
+}
+
+.active {
+  display: block;
+}
