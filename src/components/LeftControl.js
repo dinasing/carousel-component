@@ -2,8 +2,8 @@ import React from 'react';
 
 const LeftControl = props => {
   return (
-    <div className="control right">
-      <div className="arrow right">{'<'}</div>
+    <div className="control left">
+      <div className="arrow left">{'<'}</div>
     </div>
   );
 };
