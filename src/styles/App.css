@@ -53,3 +53,9 @@
 .arrow.right {
   right: 50%;
 }
+
+@media (max-width: 640px) {
+  .arrow {
+    display: none;
+  }
+}
