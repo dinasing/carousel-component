@@ -22,3 +22,34 @@
 .active {
   display: block;
 }
+
+.control {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  text-align: center;
+  width: 5%;
+  cursor: pointer;
+}
+
+.control.left {
+  left: 0;
+  right: auto;
+}
+
+.control.right {
+  right: 0;
+  left: auto;
+}
+
+.arrow {
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 84px;
+}
+
+.arrow.right {
+  right: 50%;
+}
