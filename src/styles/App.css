@@ -19,8 +19,15 @@
   margin: 0 auto;
 }
 
-.active {
+.active,
+.next {
   display: block;
+}
+
+.next {
+  position: absolute;
+  top: 0;
+  width: 100%;
 }
 
 .control {
