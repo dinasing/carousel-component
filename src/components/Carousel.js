@@ -17,11 +17,17 @@ const slides = [
 ];
 
 export default class Carousel extends Component {
+  state = {
+    currentItemIndex: 0,
+  };
+
   render() {
+    const { currentItemIndex } = this.state;
+
     return (
       <>
         <div className="carousel">
-          <Slides slides={slides} />
+          <Slides slides={slides} currentItemIndex={currentItemIndex} />
         </div>
         <LeftControl />
         <RightControl />
