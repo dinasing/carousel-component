@@ -61,7 +61,7 @@
   right: 50%;
 }
 
-to-left {
+.to-left {
   animation-name: left;
 }
 
