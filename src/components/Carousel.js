@@ -24,8 +24,8 @@ export default class Carousel extends Component {
         <div className="carousel">
           <Slides slides={slides} currentItemIndex={currentItemIndex} />
         </div>
-        <LeftControl />
-        <RightControl />
+        <LeftControl onLeftButtonClick={this.onLeftButtonClick} />
+        <RightControl onRightButtonClick={this.onRightButtonClick} />
       </>
     );
   }
