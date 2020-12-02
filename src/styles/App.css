@@ -61,6 +61,27 @@
   right: 50%;
 }
 
+.links-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 15%;
+  bottom: 0;
+  text-align: center;
+  font-size: 2vw;
+}
+
+.link-to-slide {
+  display: inline-block;
+  color: black;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.link-to-slide.active {
+  border-bottom: 2px solid black;
+}
+
 .to-left {
   animation-name: left;
 }
@@ -100,5 +121,10 @@
 @media (max-width: 640px) {
   .arrow {
     display: none;
+  }
+
+  .links-container {
+    height: 20%;
+    font-size: 3vw;
   }
 }
