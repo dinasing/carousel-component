@@ -58,6 +58,10 @@ export default class Carousel extends Component {
     }
   };
 
+  goToSlide = index => {
+    this.changeCurrentItemIndexTo(index);
+  };
+
   render() {
     const { currentItemIndex } = this.state;
     const { slides } = this.props;
@@ -65,7 +69,7 @@ export default class Carousel extends Component {
     return (
       <>
         <div className="carousel">
-          <Slides slides={slides} currentItemIndex={currentItemIndex} />
+          <Slides slides={slides} currentItemIndex={currentItemIndex} goToSlide={this.goToSlide} />
         </div>
         <LeftControl onLeftButtonClick={this.onLeftButtonClick} />
         <RightControl onRightButtonClick={this.onRightButtonClick} />
