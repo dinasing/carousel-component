@@ -8,11 +8,12 @@ export default class Carousel extends Component {
     currentItemIndex: 0,
   };
 
-  changeCurrentItemIndexTo(index) {
-    this.setState((prevState, props) => ({
-      currentItemIndex: (prevState.currentItemIndex + index) % props.slides.length,
-    }));
-  }
+  changeCurrentItemIndexTo = index => {
+    const { slides } = this.props;
+    this.setState({
+      currentItemIndex: (slides.length + index) % slides.length,
+    });
+  };
 
   render() {
     const { currentItemIndex } = this.state;
