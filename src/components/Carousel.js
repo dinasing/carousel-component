@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import LeftControl from './LeftControl';
-import LinksContainer from './LinksContainer';
 import RightControl from './RightControl';
 import Slides from './Slides';
 
@@ -70,13 +69,8 @@ export default class Carousel extends Component {
     return (
       <>
         <div className="carousel">
-          <Slides slides={slides} currentItemIndex={currentItemIndex} />
+          <Slides slides={slides} currentItemIndex={currentItemIndex} goToSlide={this.goToSlide} />
         </div>
-        <LinksContainer
-          goToSlide={this.goToSlide}
-          length={slides.length}
-          currentItemIndex={currentItemIndex}
-        />
         <LeftControl onLeftButtonClick={this.onLeftButtonClick} />
         <RightControl onRightButtonClick={this.onRightButtonClick} />
       </>
