@@ -19,13 +19,25 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.(ttf|eot|svg|woff|png)$/,
+        test: /\.(svg|png)$/,
         loader: 'file-loader',
         options: {
           name: '[path][name].[ext]?[hash]',
           outputPath: 'images/',
           publicPath: './dist/images',
         },
+      },
+      {
+        test: /\.(woff(2)?|eot|ttf)/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: './dist/fonts/',
+            },
+          },
+        ],
       },
       {
         enforce: 'pre',
