@@ -27,10 +27,7 @@ export default class Carousel extends Component {
   };
 
   onLeftButtonClick = () => {
-    const { isEnabled } = this.state;
-    if (isEnabled) {
-      this.previousItem();
-    }
+    this.previousItem();
   };
 
   onRightButtonClick = () => {
