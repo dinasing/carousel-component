@@ -1,5 +1,4 @@
 import React from 'react';
-import LinksContainer from './LinksContainer';
 import Slide from './Slide';
 
 const Slides = props => {
@@ -10,11 +9,6 @@ const Slides = props => {
       {slides.map((slide, index) => (
         <Slide key={`slide ${index}`} slide={slide} />
       ))}
-      <LinksContainer
-        goToSlide={props.goToSlide}
-        length={slides.length}
-        currentItemIndex={currentItemIndex}
-      />
     </div>
   );
 };
