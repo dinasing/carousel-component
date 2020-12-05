@@ -8,7 +8,7 @@ const Slides = props => {
   return (
     <div className="slides">
       {slides.map((slide, index) => (
-        <Slide key={`slide ${index}`} slide={slide} isActive={currentItemIndex === index} />
+        <Slide key={`slide ${index}`} slide={slide} />
       ))}
       <LinksContainer
         goToSlide={props.goToSlide}

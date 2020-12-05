@@ -3,10 +3,9 @@ import React from 'react';
 const Slide = props => {
   const {
     slide: { heading, description, image },
-    isActive,
   } = props;
   return (
-    <div className={`slide${isActive ? ' active' : ''}`}>
+    <div className={`slide`}>
       <div>{heading}</div>
       <div>{description}</div>
       <div>
