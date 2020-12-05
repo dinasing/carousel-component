@@ -1,3 +1,7 @@
+body {
+  overflow: hidden;
+}
+
 .carousel {
   position: absolute;
   top: 50%;
@@ -10,24 +14,21 @@
 .slides {
   position: relative;
   width: 100%;
-  overflow: hidden;
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
 }
 
 .slide {
-  display: none;
-  position: relative;
-  margin: 0 auto;
-}
-
-.active,
-.next {
-  display: block;
-}
-
-.next {
-  position: absolute;
-  top: 0;
   width: 100%;
+  flex-shrink: 0;
+  height: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+.slides > div {
+  scroll-snap-align: start;
 }
 
 .control {
@@ -76,46 +77,6 @@
   color: black;
   cursor: pointer;
   margin: 5px;
-}
-
-.link-to-slide.active {
-  border-bottom: 2px solid black;
-}
-
-.to-left {
-  animation-name: left;
-}
-
-.to-right {
-  animation-name: right;
-  animation-direction: reverse;
-}
-
-.from-left {
-  animation-name: left;
-  animation-direction: reverse;
-}
-
-.from-right {
-  animation-name: right;
-}
-
-@keyframes left {
-  from {
-    left: 0;
-  }
-  to {
-    left: -100%;
-  }
-}
-
-@keyframes right {
-  from {
-    left: 100%;
-  }
-  to {
-    left: 0;
-  }
 }
 
 @media (max-width: 640px) {
