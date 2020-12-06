@@ -28,13 +28,17 @@ export default class Carousel extends Component {
   };
 
   onLeftButtonClick = () => {
-    this.setState(prevState => ({ x: prevState.x + 100 }));
-    //this.previousItem();
+    const { slides } = this.props;
+    this.setState(prevState => ({
+      x: prevState.x === 0 ? -100 * (slides.length - 1) : prevState.x + 100,
+    }));
   };
 
   onRightButtonClick = () => {
-    this.setState(prevState => ({ x: prevState.x - 100 }));
-    //this.nextItem();
+    const { slides } = this.props;
+    this.setState(prevState => ({
+      x: prevState.x === -100 * (slides.length - 1) ? 0 : prevState.x - 100,
+    }));
   };
 
   goToSlide = index => {
