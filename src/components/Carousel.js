@@ -7,6 +7,7 @@ import Slides from './Slides';
 export default class Carousel extends Component {
   state = {
     currentItemIndex: 0,
+    x: 0,
   };
 
   changeCurrentItemIndexTo = index => {
@@ -27,11 +28,13 @@ export default class Carousel extends Component {
   };
 
   onLeftButtonClick = () => {
-    this.previousItem();
+    this.setState(prevState => ({ x: prevState.x + 100 }));
+    //this.previousItem();
   };
 
   onRightButtonClick = () => {
-    this.nextItem();
+    this.setState(prevState => ({ x: prevState.x - 100 }));
+    //this.nextItem();
   };
 
   goToSlide = index => {
@@ -39,13 +42,18 @@ export default class Carousel extends Component {
   };
 
   render() {
-    const { currentItemIndex } = this.state;
+    const { currentItemIndex, x } = this.state;
     const { slides } = this.props;
 
     return (
       <>
         <div className="carousel">
-          <Slides slides={slides} currentItemIndex={currentItemIndex} goToSlide={this.goToSlide} />
+          <Slides
+            slides={slides}
+            currentItemIndex={currentItemIndex}
+            x={x}
+            goToSlide={this.goToSlide}
+          />
 
           <LinksContainer
             goToSlide={this.goToSlide}
