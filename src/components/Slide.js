@@ -3,14 +3,13 @@ import React from 'react';
 const Slide = props => {
   const {
     slide: { heading, description, image },
-    x,
   } = props;
   return (
-    <div className={`slide`} style={{ transform: `translateX(${x}%)` }}>
+    <div className={`slide`}>
       <div>{heading}</div>
       <div>{description}</div>
       <div>
-        <img src={image} alt="" width="100%" />
+        <img src={image} alt="" width="100%" height="auto" />
       </div>
     </div>
   );
