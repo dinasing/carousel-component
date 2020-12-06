@@ -10,6 +10,37 @@ export default class Carousel extends Component {
     x: 0,
   };
 
+  startX = 0;
+  startY = 0;
+  startTime = 0;
+
+  handleTouchStart = e => {
+    const touchObject = e.changedTouches[0];
+    this.startX = touchObject.pageX;
+    this.startY = touchObject.pageY;
+    this.startTime = new Date().getTime();
+  };
+
+  handleTouchEnd = e => {
+    const minDistance = 150;
+    const maxYDistance = 100;
+    const maxAllowedTime = 300;
+
+    const touchObject = e.changedTouches[0];
+    const distanceX = touchObject.pageX - this.startX;
+    const distanceY = touchObject.pageY - this.startY;
+    const elapsedTime = new Date().getTime() - this.startTime;
+    if (elapsedTime <= maxAllowedTime) {
+      if (Math.abs(distanceX) >= minDistance && Math.abs(distanceY) <= maxYDistance) {
+        if (distanceX > 0) {
+          this.previousItem();
+        } else {
+          this.nextItem();
+        }
+      }
+    }
+  };
+
   changeCurrentItemIndexTo = index => {
     const { slides } = this.props;
     this.setState({
@@ -18,27 +49,25 @@ export default class Carousel extends Component {
   };
 
   previousItem = () => {
-    const { currentItemIndex } = this.state;
-    this.changeCurrentItemIndexTo(currentItemIndex - 1);
-  };
-
-  nextItem = () => {
-    const { currentItemIndex } = this.state;
-    this.changeCurrentItemIndexTo(currentItemIndex + 1);
-  };
-
-  onLeftButtonClick = () => {
     const { slides } = this.props;
     this.setState(prevState => ({
       x: prevState.x === 0 ? -100 * (slides.length - 1) : prevState.x + 100,
     }));
   };
 
-  onRightButtonClick = () => {
+  nextItem = () => {
     const { slides } = this.props;
     this.setState(prevState => ({
       x: prevState.x === -100 * (slides.length - 1) ? 0 : prevState.x - 100,
     }));
+  };
+
+  onLeftButtonClick = () => {
+    this.previousItem();
+  };
+
+  onRightButtonClick = () => {
+    this.nextItem();
   };
 
   goToSlide = index => {
@@ -53,7 +82,11 @@ export default class Carousel extends Component {
 
     return (
       <>
-        <div className="carousel">
+        <div
+          className="carousel"
+          onTouchStart={this.handleTouchStart}
+          onTouchEnd={this.handleTouchEnd}
+        >
           <Slides
             slides={slides}
             currentItemIndex={currentItemIndex}
