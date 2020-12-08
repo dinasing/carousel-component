@@ -101,7 +101,7 @@ export default class Carousel extends Component {
   };
 
   goToSlide = index => {
-    this.changeCurrentItemIndexTo(index + 1, 0.5);
+    this.changeCurrentItemIndexTo(index, 0.5);
   };
 
   render() {

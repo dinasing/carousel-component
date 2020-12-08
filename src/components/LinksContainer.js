@@ -5,7 +5,7 @@ export default function LinksContainer(props) {
   const { currentItemIndex, length } = props;
 
   const links = [];
-  for (let index = 0; index < length; index++) {
+  for (let index = 1; index <= length; index++) {
     links.push(
       <LinkToSlide
         key={`link to slide # ${index}`}

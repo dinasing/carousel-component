@@ -5,7 +5,7 @@ export default function LinkToSlide(props) {
 
   return (
     <div onClick={props.goToSlide} className={`link-to-slide${isActive ? ' active' : ''}`}>
-      {value + 1}
+      {value}
     </div>
   );
 }
