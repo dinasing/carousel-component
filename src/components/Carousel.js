@@ -79,7 +79,7 @@ export default class Carousel extends Component {
   changeCurrentItemIndexTo = (index, duration) => {
     const { slides, numberOfSlidesOnPage } = this.props;
     index =
-      index === 0
+      index === numberOfSlidesOnPage - 1
         ? slides.length + numberOfSlidesOnPage - 1
         : index === slides.length + 1 + numberOfSlidesOnPage - 1
         ? numberOfSlidesOnPage
@@ -160,6 +160,7 @@ export default class Carousel extends Component {
             goToSlide={this.goToSlide}
             length={slides.length}
             currentItemIndex={currentItemIndex}
+            numberOfSlidesOnPage={numberOfSlidesOnPage}
           />
         </div>
         <LeftControl onLeftButtonClick={this.onLeftButtonClick} />
