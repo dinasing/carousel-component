@@ -5,14 +5,18 @@ import RightControl from './RightControl';
 import Slides from './Slides';
 
 export default class Carousel extends Component {
-  state = {
-    currentItemIndex: 1,
-    transitionDuration: '0s',
-    x: -100,
-  };
-
   transitionTimeout;
+
   lastTouch = 0;
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentItemIndex: props.numberOfSlidesOnPage,
+      transitionDuration: '0s',
+      x: -100 * props.numberOfSlidesOnPage,
+    };
+  }
 
   handleTouchStart = e => {
     const touchObject = e.changedTouches[0];
@@ -30,12 +34,17 @@ export default class Carousel extends Component {
     clearTimeout(this.transitionTimeout);
 
     this.setState(prevState => {
-      const { slides } = this.props;
+      const { slides, numberOfSlidesOnPage } = this.props;
       const length = slides.length;
       const nextX = prevState.x - delta;
 
       return {
-        x: nextX > 0 ? -100 * length : nextX < -100 * (length + 1) ? -100 : nextX,
+        x:
+          nextX > 0
+            ? -100 * (length + numberOfSlidesOnPage - 1)
+            : nextX < -100 * (length + 1 + numberOfSlidesOnPage - 1)
+            ? -100 * numberOfSlidesOnPage
+            : nextX,
         transitionDuration: '0s',
       };
     });
@@ -68,8 +77,13 @@ export default class Carousel extends Component {
   };
 
   changeCurrentItemIndexTo = (index, duration) => {
-    const { slides } = this.props;
-    index = index === 0 ? slides.length : index === slides.length + 1 ? 1 : index;
+    const { slides, numberOfSlidesOnPage } = this.props;
+    index =
+      index === 0
+        ? slides.length + numberOfSlidesOnPage - 1
+        : index === slides.length + 1 + numberOfSlidesOnPage - 1
+        ? numberOfSlidesOnPage
+        : index;
 
     this.setState({
       currentItemIndex: index,
@@ -104,13 +118,26 @@ export default class Carousel extends Component {
     this.changeCurrentItemIndexTo(index, 0.5);
   };
 
+  copySlides = (slides, numberOfSlidesOnPage) => {
+    let slidesWithClones = [...slides];
+    if (numberOfSlidesOnPage < 3) {
+      slidesWithClones.unshift(slides[slides.length - 1]);
+      slidesWithClones.push(slides[0]);
+    } else {
+      for (let index = 0; index < numberOfSlidesOnPage; index++) {
+        slidesWithClones.unshift(slides[slides.length - 1 - index]);
+        slidesWithClones.push(slides[index]);
+      }
+    }
+
+    return slidesWithClones;
+  };
+
   render() {
     const { currentItemIndex, x, transitionDuration } = this.state;
     const { slides, numberOfSlidesOnPage } = this.props;
 
-    let slidesWithFirstAndLastClones = [...slides];
-    slidesWithFirstAndLastClones.unshift(slides[slides.length - 1]);
-    slidesWithFirstAndLastClones.push(slides[0]);
+    let slidesWithFirstAndLastClones = this.copySlides(slides, numberOfSlidesOnPage);
 
     return (
       <>
