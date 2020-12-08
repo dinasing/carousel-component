@@ -42,7 +42,7 @@ export default class Carousel extends Component {
         x:
           nextX > 0
             ? -100 * (length + numberOfSlidesOnPage - 1)
-            : nextX < -100 * (length + 1 + numberOfSlidesOnPage - 1)
+            : nextX < -100 * (length + numberOfSlidesOnPage)
             ? -100 * numberOfSlidesOnPage
             : nextX,
         transitionDuration: '0s',
@@ -81,7 +81,7 @@ export default class Carousel extends Component {
     index =
       index === numberOfSlidesOnPage - 1
         ? slides.length + numberOfSlidesOnPage - 1
-        : index === slides.length + 1 + numberOfSlidesOnPage - 1
+        : index === slides.length + numberOfSlidesOnPage
         ? numberOfSlidesOnPage
         : index;
 
