@@ -1,3 +1,20 @@
+@font-face {
+  font-family: 'Roboto';
+  src: url('../../assets/fonts/Roboto-Regular.ttf');
+}
+
+.carousel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  max-height: 100%;
+  overflow: hidden;
+  font-family: 'Roboto';
+}
+
 * {
   padding: 0;
   margin: 0;
