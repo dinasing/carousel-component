@@ -80,6 +80,16 @@ body {
   margin: 5px;
 }
 
+.link-to-slide:hover,
+:focus,
+.active {
+  color: whitesmoke;
+}
+
+.link-to-slide.active {
+  border-bottom: 2px solid;
+}
+
 @media (max-width: 640px) {
   .arrow {
     display: none;
