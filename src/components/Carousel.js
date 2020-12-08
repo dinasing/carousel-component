@@ -6,9 +6,9 @@ import Slides from './Slides';
 
 export default class Carousel extends Component {
   state = {
-    currentItemIndex: 0,
+    currentItemIndex: 1,
     transitionDuration: '0s',
-    x: 0,
+    x: -100,
   };
 
   transitionTimeout;
@@ -31,11 +31,11 @@ export default class Carousel extends Component {
 
     this.setState(prevState => {
       const { slides } = this.props;
-      const length = slides.length - 1;
+      const length = slides.length;
       const nextX = prevState.x - delta;
 
       return {
-        x: nextX > 0 ? -100 * length : nextX < -100 * length ? 0 : nextX,
+        x: nextX > 0 ? -100 * length : nextX < -100 * (length + 1) ? -100 : nextX,
         transitionDuration: '0s',
       };
     });
@@ -69,7 +69,8 @@ export default class Carousel extends Component {
 
   changeCurrentItemIndexTo = (index, duration) => {
     const { slides } = this.props;
-    index = (slides.length + index) % slides.length;
+    index = index === 0 ? slides.length : index === slides.length + 1 ? 1 : index;
+
     this.setState({
       currentItemIndex: index,
       x: -index * 100,
@@ -100,12 +101,16 @@ export default class Carousel extends Component {
   };
 
   goToSlide = index => {
-    this.changeCurrentItemIndexTo(index, 0.5);
+    this.changeCurrentItemIndexTo(index + 1, 0.5);
   };
 
   render() {
     const { currentItemIndex, x, transitionDuration } = this.state;
     const { slides } = this.props;
+
+    let slidesWithFirstAndLastClones = [...slides];
+    slidesWithFirstAndLastClones.unshift(slides[slides.length - 1]);
+    slidesWithFirstAndLastClones.push(slides[0]);
 
     return (
       <>
@@ -116,7 +121,7 @@ export default class Carousel extends Component {
           onTouchEnd={this.handleTouchEnd}
         >
           <Slides
-            slides={slides}
+            slides={slidesWithFirstAndLastClones}
             currentItemIndex={currentItemIndex}
             x={x}
             transitionDuration={transitionDuration}
