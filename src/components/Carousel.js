@@ -106,7 +106,7 @@ export default class Carousel extends Component {
 
   render() {
     const { currentItemIndex, x, transitionDuration } = this.state;
-    const { slides } = this.props;
+    const { slides, numberOfSlidesOnPage } = this.props;
 
     let slidesWithFirstAndLastClones = [...slides];
     slidesWithFirstAndLastClones.unshift(slides[slides.length - 1]);
@@ -126,6 +126,7 @@ export default class Carousel extends Component {
             x={x}
             transitionDuration={transitionDuration}
             goToSlide={this.goToSlide}
+            numberOfSlidesOnPage={numberOfSlidesOnPage}
           />
 
           <LinksContainer

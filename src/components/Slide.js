@@ -5,13 +5,17 @@ const Slide = props => {
     slide: { heading, description, image },
     x,
     transitionDuration,
+    numberOfSlidesOnPage,
   } = props;
+
+  const minWidth = 100 / numberOfSlidesOnPage;
   return (
     <div
       className={`slide`}
       style={{
         transform: `translateX(${x}%)`,
         transitionDuration,
+        minWidth: `${minWidth}%`,
       }}
     >
       <div>{heading}</div>
