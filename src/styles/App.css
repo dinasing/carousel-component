@@ -9,10 +9,9 @@ body {
 }
 
 .slides {
-  display: flex;
-  overflow-x: visible;
-  transition-duration: 0.5s;
   min-height: 100%;
+  display: flex;
+  overflow-x: hidden;
 }
 
 .carousel {
@@ -29,6 +28,8 @@ body {
   object-fit: contain;
   min-width: 100%;
   min-height: 100%;
+  transition-property: transform;
+  will-change: transform;
 }
 
 .control {
