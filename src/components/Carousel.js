@@ -7,59 +7,88 @@ import Slides from './Slides';
 export default class Carousel extends Component {
   state = {
     currentItemIndex: 0,
+    transitionDuration: '0s',
     x: 0,
   };
 
-  startX = 0;
-  startY = 0;
-  startTime = 0;
+  transitionTimeout;
+  lastTouch = 0;
 
   handleTouchStart = e => {
     const touchObject = e.changedTouches[0];
-    this.startX = touchObject.pageX;
-    this.startY = touchObject.pageY;
-    this.startTime = new Date().getTime();
+    this.lastTouch = touchObject.pageX;
   };
 
-  handleTouchEnd = e => {
-    const minDistance = 150;
-    const maxYDistance = 100;
-    const maxAllowedTime = 300;
-
+  handleTouchMove = e => {
     const touchObject = e.changedTouches[0];
-    const distanceX = touchObject.pageX - this.startX;
-    const distanceY = touchObject.pageY - this.startY;
-    const elapsedTime = new Date().getTime() - this.startTime;
-    if (elapsedTime <= maxAllowedTime) {
-      if (Math.abs(distanceX) >= minDistance && Math.abs(distanceY) <= maxYDistance) {
-        if (distanceX > 0) {
-          this.previousItem();
-        } else {
-          this.nextItem();
-        }
-      }
-    }
+    const delta = ((this.lastTouch - touchObject.pageX) / window.screen.availWidth) * 100;
+    this.lastTouch = touchObject.pageX;
+    this.handleMovement(delta);
   };
 
-  changeCurrentItemIndexTo = index => {
-    const { slides } = this.props;
-    this.setState({
-      currentItemIndex: (slides.length + index) % slides.length,
+  handleMovement = delta => {
+    clearTimeout(this.transitionTimeout);
+
+    this.setState(prevState => {
+      const { slides } = this.props;
+      const length = slides.length - 1;
+      const nextX = prevState.x - delta;
+
+      return {
+        x: nextX > 0 ? -100 * length : nextX < -100 * length ? 0 : nextX,
+        transitionDuration: '0s',
+      };
     });
   };
 
-  previousItem = () => {
+  handleTouchEnd = e => {
+    this.handleMovementEnd(e);
+    this.lastTouch = 0;
+  };
+
+  handleMovementEnd = e => {
+    const { x, currentItemIndex } = this.state;
+    const endX = -x / 100;
+    const remainder = endX % 1;
+    let nextItemIndex = endX - remainder;
+    const deltaInteger = nextItemIndex - currentItemIndex;
+
+    if (deltaInteger >= 0) {
+      if (remainder >= 0.1) {
+        nextItemIndex += 1;
+        this.changeCurrentItemIndexTo(nextItemIndex, Math.min(0.5, 1 - Math.abs(remainder)));
+      } else this.changeCurrentItemIndexTo(nextItemIndex, Math.max(0.5, 1 - Math.abs(remainder)));
+    } else {
+      nextItemIndex = currentItemIndex - Math.abs(deltaInteger);
+      if (remainder > 0.9) {
+        nextItemIndex += 1;
+      }
+      this.changeCurrentItemIndexTo(nextItemIndex, Math.max(0.5, 1 - Math.abs(remainder)));
+    }
+  };
+
+  changeCurrentItemIndexTo = (index, duration) => {
     const { slides } = this.props;
-    this.setState(prevState => ({
-      x: prevState.x === 0 ? -100 * (slides.length - 1) : prevState.x + 100,
-    }));
+    index = (slides.length + index) % slides.length;
+    this.setState({
+      currentItemIndex: index,
+      x: -index * 100,
+      transitionDuration: `${duration}s`,
+    });
+
+    this.transitionTimeout = setTimeout(() => {
+      this.setState({ transitionDuration: '0s' });
+    }, duration * 100);
+  };
+
+  previousItem = () => {
+    const { currentItemIndex } = this.state;
+    this.changeCurrentItemIndexTo(currentItemIndex - 1, 0.5);
   };
 
   nextItem = () => {
-    const { slides } = this.props;
-    this.setState(prevState => ({
-      x: prevState.x === -100 * (slides.length - 1) ? 0 : prevState.x - 100,
-    }));
+    const { currentItemIndex } = this.state;
+    this.changeCurrentItemIndexTo(currentItemIndex + 1, 0.5);
   };
 
   onLeftButtonClick = () => {
@@ -73,11 +102,15 @@ export default class Carousel extends Component {
   goToSlide = index => {
     this.setState({
       x: -100 * index,
+      transitionDuration: '0.5s',
     });
+    this.transitionTimeout = setTimeout(() => {
+      this.setState({ transitionDuration: '0s' });
+    }, 0.5 * 100);
   };
 
   render() {
-    const { currentItemIndex, x } = this.state;
+    const { currentItemIndex, x, transitionDuration } = this.state;
     const { slides } = this.props;
 
     return (
@@ -85,12 +118,14 @@ export default class Carousel extends Component {
         <div
           className="carousel"
           onTouchStart={this.handleTouchStart}
+          onTouchMove={this.handleTouchMove}
           onTouchEnd={this.handleTouchEnd}
         >
           <Slides
             slides={slides}
             currentItemIndex={currentItemIndex}
             x={x}
+            transitionDuration={transitionDuration}
             goToSlide={this.goToSlide}
           />
 
