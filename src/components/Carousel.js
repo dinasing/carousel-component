@@ -100,13 +100,7 @@ export default class Carousel extends Component {
   };
 
   goToSlide = index => {
-    this.setState({
-      x: -100 * index,
-      transitionDuration: '0.5s',
-    });
-    this.transitionTimeout = setTimeout(() => {
-      this.setState({ transitionDuration: '0s' });
-    }, 0.5 * 100);
+    this.changeCurrentItemIndexTo(index, 0.5);
   };
 
   render() {
