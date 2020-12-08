@@ -74,6 +74,7 @@ body {
   top: 50%;
   transform: translateY(-50%);
   font-size: 84px;
+  font-size: 6vw;
 }
 
 .arrow.right {
@@ -99,7 +100,8 @@ body {
 
 .link-to-slide:hover,
 :focus,
-.active {
+.active,
+.arrow:hover {
   color: whitesmoke;
 }
 
@@ -114,6 +116,6 @@ body {
 
   .links-container {
     height: 20%;
-    font-size: 3vw;
+    font-size: 15vw;
   }
 }
