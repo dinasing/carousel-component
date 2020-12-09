@@ -2,9 +2,10 @@
   "name": "carousel-component",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "start": "webpack-dev-server --hot --open --mode development"
+    "start": "webpack-dev-server --hot --open --mode development",
+    "build": "webpack  -d --mode development"
   },
   "repository": {
     "type": "git",
@@ -48,7 +49,8 @@
     "webpack": "^4.42.0",
     "webpack-bundle-analyzer": "^3.6.1",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3"
+    "webpack-dev-server": "^3.10.3",
+    "workbox-webpack-plugin": "^6.0.2"
   },
   "dependencies": {
     "react": "^16.13.0",
