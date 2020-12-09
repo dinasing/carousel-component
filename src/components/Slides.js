@@ -2,7 +2,14 @@ import React from 'react';
 import Slide from './Slide';
 
 const Slides = props => {
-  const { slides, currentItemIndex, x, transitionDuration, numberOfSlidesOnPage } = props;
+  const {
+    slides,
+    x,
+    transitionDuration,
+    numberOfSlidesOnPage,
+    numberOfSlidesOnPageMobile,
+    isSmallScreen,
+  } = props;
 
   return (
     <div className="slides">
@@ -12,7 +19,7 @@ const Slides = props => {
           slide={slide}
           x={x}
           transitionDuration={transitionDuration}
-          numberOfSlidesOnPage={numberOfSlidesOnPage}
+          numberOfSlidesOnPage={isSmallScreen ? numberOfSlidesOnPageMobile : numberOfSlidesOnPage}
         />
       ))}
     </div>
