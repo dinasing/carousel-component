@@ -15,8 +15,21 @@ export default class Carousel extends Component {
       currentItemIndex: 1,
       transitionDuration: '0s',
       x: -100,
+      isSmallScreen: !window.matchMedia('(min-width: 640px)').matches,
     };
   }
+
+  componentDidMount() {
+    window.matchMedia('(min-width: 640px)').addEventListener('change', this.handleScreenSizeChange);
+  }
+
+  componentWillUnmount() {
+    window
+      .matchMedia('(min-width: 640px)')
+      .removeEventListener('change', this.handleScreenSizeChange);
+  }
+
+  handleScreenSizeChange = e => this.setState({ isSmallScreen: !e.matches });
 
   handleTouchStart = e => {
     const touchObject = e.changedTouches[0];
@@ -134,13 +147,18 @@ export default class Carousel extends Component {
   };
 
   render() {
-    const { currentItemIndex, x, transitionDuration } = this.state;
-    const { slides, numberOfSlidesOnPage } = this.props;
+    const { currentItemIndex, x, transitionDuration, isSmallScreen } = this.state;
+    const { slides, numberOfSlidesOnPage, numberOfSlidesOnPageMobile } = this.props;
 
     let slidesWithFirstAndLastClones = this.copySlides(slides, numberOfSlidesOnPage);
 
     return (
       <>
+        {' '}
+        {/* <div>
+          {this.state.matches && <h1>Big Screen</h1>}
+          {!this.state.matches && <h3>Small Screen</h3>}
+        </div> */}
         <div
           className="carousel"
           onTouchStart={this.handleTouchStart}
@@ -154,6 +172,8 @@ export default class Carousel extends Component {
             transitionDuration={transitionDuration}
             goToSlide={this.goToSlide}
             numberOfSlidesOnPage={numberOfSlidesOnPage}
+            numberOfSlidesOnPageMobile={numberOfSlidesOnPageMobile}
+            isSmallScreen={isSmallScreen}
           />
         </div>
         <LinksContainer
