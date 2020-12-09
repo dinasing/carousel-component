@@ -109,7 +109,7 @@ body {
 .link-to-slide:hover,
 :focus,
 .active {
-  color: cornflowerblue;
+  color: #2196f3;
 }
 
 .arrow:hover {
