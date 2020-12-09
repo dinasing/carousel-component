@@ -25,7 +25,7 @@ class App extends Component {
   render() {
     return (
       <>
-        <Carousel slides={slides} numberOfSlidesOnPage={2} />
+        <Carousel slides={slides} numberOfSlidesOnPage={2} numberOfSlidesOnPageMobile={1} />
       </>
     );
   }
