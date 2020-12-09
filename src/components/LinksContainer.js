@@ -2,7 +2,7 @@ import React from 'react';
 import LinkToSlide from './LinkToSlide';
 
 export default function LinksContainer(props) {
-  const { currentItemIndex, length, numberOfSlidesOnPage } = props;
+  const { currentItemIndex, length } = props;
 
   const links = [];
   for (let index = 1; index <= length; index++) {
