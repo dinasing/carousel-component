@@ -9,9 +9,9 @@ export default function LinksContainer(props) {
     links.push(
       <LinkToSlide
         key={`link to slide # ${index}`}
-        isActive={currentItemIndex === index + numberOfSlidesOnPage - 1}
+        isActive={currentItemIndex === index}
         value={index}
-        goToSlide={() => props.goToSlide(index + numberOfSlidesOnPage - 1)}
+        goToSlide={() => props.goToSlide(index)}
       />
     );
   }

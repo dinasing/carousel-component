@@ -12,9 +12,9 @@ export default class Carousel extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentItemIndex: props.numberOfSlidesOnPage,
+      currentItemIndex: 1,
       transitionDuration: '0s',
-      x: -100 * props.numberOfSlidesOnPage,
+      x: -100,
     };
   }
 
@@ -34,20 +34,22 @@ export default class Carousel extends Component {
     clearTimeout(this.transitionTimeout);
 
     this.setState(prevState => {
-      const { slides, numberOfSlidesOnPage } = this.props;
-      const length = slides.length;
       const nextX = prevState.x - delta;
 
       return {
-        x:
-          nextX > 0
-            ? -100 * (length + numberOfSlidesOnPage - 1)
-            : nextX < -100 * (length + numberOfSlidesOnPage)
-            ? -100 * numberOfSlidesOnPage
-            : nextX,
+        x: this.checkX(nextX),
         transitionDuration: '0s',
       };
     });
+  };
+
+  checkX = nextX => {
+    const {
+      slides: { length },
+    } = this.props;
+
+    const x = nextX > 0 ? -100 * length : nextX < -100 * (length + 1) ? -100 : nextX;
+    return x;
   };
 
   handleTouchEnd = e => {
@@ -76,14 +78,15 @@ export default class Carousel extends Component {
     }
   };
 
-  changeCurrentItemIndexTo = (index, duration) => {
+  checkIndex = index => {
     const { slides, numberOfSlidesOnPage } = this.props;
-    index =
-      index === numberOfSlidesOnPage - 1
-        ? slides.length + numberOfSlidesOnPage - 1
-        : index === slides.length + numberOfSlidesOnPage
-        ? numberOfSlidesOnPage
-        : index;
+    index = index === 0 ? slides.length : index === slides.length + 1 ? 1 : index;
+
+    return index;
+  };
+
+  changeCurrentItemIndexTo = (index, duration) => {
+    index = this.checkIndex(index);
 
     this.setState({
       currentItemIndex: index,
@@ -120,15 +123,12 @@ export default class Carousel extends Component {
 
   copySlides = (slides, numberOfSlidesOnPage) => {
     let slidesWithClones = [...slides];
-    if (numberOfSlidesOnPage < 3) {
-      slidesWithClones.unshift(slides[slides.length - 1]);
-      slidesWithClones.push(slides[0]);
-    } else {
-      for (let index = 0; index < numberOfSlidesOnPage; index++) {
-        slidesWithClones.unshift(slides[slides.length - 1 - index]);
-        slidesWithClones.push(slides[index]);
-      }
+
+    for (let index = 0; index < numberOfSlidesOnPage; index++) {
+      slidesWithClones.push(slides[index]);
     }
+
+    slidesWithClones.unshift(slides[slides.length - 1]);
 
     return slidesWithClones;
   };
