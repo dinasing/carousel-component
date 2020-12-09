@@ -19,7 +19,7 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.(svg|png)$/,
+        test: /\.(svg)$/,
         loader: 'file-loader',
         options: {
           name: '[path][name].[ext]?[hash]',
@@ -76,11 +76,11 @@ module.exports = {
     inline: true,
     contentBase: './public',
     port: 8080,
-    proxy: { '/**': { target: 'http://localhost:3000', secure: false } },
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: 'public/index.html',
+      favicon: 'public/favicon.ico',
     }),
   ],
 };
