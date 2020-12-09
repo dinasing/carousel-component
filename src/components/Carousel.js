@@ -5,14 +5,31 @@ import RightControl from './RightControl';
 import Slides from './Slides';
 
 export default class Carousel extends Component {
-  state = {
-    currentItemIndex: 1,
-    transitionDuration: '0s',
-    x: -100,
-  };
-
   transitionTimeout;
+
   lastTouch = 0;
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentItemIndex: 1,
+      transitionDuration: '0s',
+      x: -100,
+      isSmallScreen: !window.matchMedia('(min-width: 640px)').matches,
+    };
+  }
+
+  componentDidMount() {
+    window.matchMedia('(min-width: 640px)').addEventListener('change', this.handleScreenSizeChange);
+  }
+
+  componentWillUnmount() {
+    window
+      .matchMedia('(min-width: 640px)')
+      .removeEventListener('change', this.handleScreenSizeChange);
+  }
+
+  handleScreenSizeChange = e => this.setState({ isSmallScreen: !e.matches });
 
   handleTouchStart = e => {
     const touchObject = e.changedTouches[0];
@@ -30,15 +47,22 @@ export default class Carousel extends Component {
     clearTimeout(this.transitionTimeout);
 
     this.setState(prevState => {
-      const { slides } = this.props;
-      const length = slides.length;
       const nextX = prevState.x - delta;
 
       return {
-        x: nextX > 0 ? -100 * length : nextX < -100 * (length + 1) ? -100 : nextX,
+        x: this.checkX(nextX),
         transitionDuration: '0s',
       };
     });
+  };
+
+  checkX = nextX => {
+    const {
+      slides: { length },
+    } = this.props;
+
+    const x = nextX > 0 ? -100 * length : nextX < -100 * (length + 1) ? -100 : nextX;
+    return x;
   };
 
   handleTouchEnd = e => {
@@ -67,9 +91,15 @@ export default class Carousel extends Component {
     }
   };
 
-  changeCurrentItemIndexTo = (index, duration) => {
-    const { slides } = this.props;
+  checkIndex = index => {
+    const { slides, numberOfSlidesOnPage } = this.props;
     index = index === 0 ? slides.length : index === slides.length + 1 ? 1 : index;
+
+    return index;
+  };
+
+  changeCurrentItemIndexTo = (index, duration) => {
+    index = this.checkIndex(index);
 
     this.setState({
       currentItemIndex: index,
@@ -104,16 +134,31 @@ export default class Carousel extends Component {
     this.changeCurrentItemIndexTo(index, 0.5);
   };
 
-  render() {
-    const { currentItemIndex, x, transitionDuration } = this.state;
-    const { slides } = this.props;
+  copySlides = (slides, numberOfSlidesOnPage) => {
+    let slidesWithClones = [...slides];
 
-    let slidesWithFirstAndLastClones = [...slides];
-    slidesWithFirstAndLastClones.unshift(slides[slides.length - 1]);
-    slidesWithFirstAndLastClones.push(slides[0]);
+    for (let index = 0; index < numberOfSlidesOnPage; index++) {
+      slidesWithClones.push(slides[index]);
+    }
+
+    slidesWithClones.unshift(slides[slides.length - 1]);
+
+    return slidesWithClones;
+  };
+
+  render() {
+    const { currentItemIndex, x, transitionDuration, isSmallScreen } = this.state;
+    const { slides, numberOfSlidesOnPage, numberOfSlidesOnPageMobile } = this.props;
+
+    let slidesWithFirstAndLastClones = this.copySlides(slides, numberOfSlidesOnPage);
 
     return (
       <>
+        {' '}
+        {/* <div>
+          {this.state.matches && <h1>Big Screen</h1>}
+          {!this.state.matches && <h3>Small Screen</h3>}
+        </div> */}
         <div
           className="carousel"
           onTouchStart={this.handleTouchStart}
@@ -126,14 +171,17 @@ export default class Carousel extends Component {
             x={x}
             transitionDuration={transitionDuration}
             goToSlide={this.goToSlide}
-          />
-
-          <LinksContainer
-            goToSlide={this.goToSlide}
-            length={slides.length}
-            currentItemIndex={currentItemIndex}
+            numberOfSlidesOnPage={numberOfSlidesOnPage}
+            numberOfSlidesOnPageMobile={numberOfSlidesOnPageMobile}
+            isSmallScreen={isSmallScreen}
           />
         </div>
+        <LinksContainer
+          goToSlide={this.goToSlide}
+          length={slides.length}
+          currentItemIndex={currentItemIndex}
+          numberOfSlidesOnPage={numberOfSlidesOnPage}
+        />
         <LeftControl onLeftButtonClick={this.onLeftButtonClick} />
         <RightControl onRightButtonClick={this.onRightButtonClick} />
       </>

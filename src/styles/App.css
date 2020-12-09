@@ -12,7 +12,6 @@
   transform: translate(-50%, -50%);
   max-height: 100%;
   overflow: hidden;
-  font-family: 'Roboto';
 }
 
 * {
@@ -93,6 +92,7 @@ body {
   bottom: 0;
   text-align: center;
   font-size: 2vw;
+  font-family: 'Roboto';
 }
 
 .link-to-slide {
@@ -108,7 +108,10 @@ body {
 
 .link-to-slide:hover,
 :focus,
-.active,
+.active {
+  color: cornflowerblue;
+}
+
 .arrow:hover {
   color: whitesmoke;
 }
@@ -123,7 +126,7 @@ body {
   }
 
   .links-container {
-    height: 20%;
+    height: 30%;
     font-size: 3vw;
   }
 }
