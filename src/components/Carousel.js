@@ -155,14 +155,13 @@ export default class Carousel extends Component {
             goToSlide={this.goToSlide}
             numberOfSlidesOnPage={numberOfSlidesOnPage}
           />
-
-          <LinksContainer
-            goToSlide={this.goToSlide}
-            length={slides.length}
-            currentItemIndex={currentItemIndex}
-            numberOfSlidesOnPage={numberOfSlidesOnPage}
-          />
         </div>
+        <LinksContainer
+          goToSlide={this.goToSlide}
+          length={slides.length}
+          currentItemIndex={currentItemIndex}
+          numberOfSlidesOnPage={numberOfSlidesOnPage}
+        />
         <LeftControl onLeftButtonClick={this.onLeftButtonClick} />
         <RightControl onRightButtonClick={this.onRightButtonClick} />
       </>
