@@ -4,7 +4,7 @@
     "display": "fullscreen",
     "scope": "/",
     "start_url": "/",
-    "app_name": "Carousel",
+    "name": "Carousel",
     "short_name": "Carousel",
     "icons": [
         {
@@ -26,6 +26,12 @@
             "src": "icon-512x512.png",
             "sizes": "512x512",
             "type": "image/png"
+        },
+        {
+            "src": "maskable_icon.png",
+            "sizes": "1280x1280",
+            "type": "image/png",
+            "purpose":"maskable"
         }
     ]
 }
