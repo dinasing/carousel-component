@@ -154,11 +154,6 @@ export default class Carousel extends Component {
 
     return (
       <>
-        {' '}
-        {/* <div>
-          {this.state.matches && <h1>Big Screen</h1>}
-          {!this.state.matches && <h3>Small Screen</h3>}
-        </div> */}
         <div
           className="carousel"
           onTouchStart={this.handleTouchStart}
