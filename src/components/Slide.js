@@ -2,7 +2,7 @@ import React from 'react';
 
 const Slide = props => {
   const {
-    slide: { heading, description, image },
+    slide: { content },
     x,
     transitionDuration,
     numberOfSlidesOnPage,
@@ -18,11 +18,7 @@ const Slide = props => {
         minWidth: `${minWidth}%`,
       }}
     >
-      <div>{heading}</div>
-      <div>{description}</div>
-      <div>
-        <img src={image} alt="" width="100%" height="auto" />
-      </div>
+      {content}
     </div>
   );
 };
