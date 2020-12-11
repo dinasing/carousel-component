@@ -2,8 +2,8 @@
     "theme_color": "#2196f3",
     "background_color": "#2196f3",
     "display": "fullscreen",
-    "scope": "/",
-    "start_url": "/",
+    "scope": "/carousel-component/",
+    "start_url": "/carousel-component/",
     "name": "Carousel",
     "short_name": "Carousel",
     "icons": [
