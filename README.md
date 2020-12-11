@@ -1,6 +1,7 @@
 # carousel-component
 > Carousel Component built with React. [Live demo](https://dinasing.github.io/carousel-component/)
 
+![](./carousel-demo-for-readme.png)
 ## Features
 
 * Mobile finger-following swipe gestures
