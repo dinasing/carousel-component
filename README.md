@@ -20,7 +20,7 @@ npm start
 
 ## Example code
 
-```
+```javascript
 import React, { Component } from 'react';
 import './carousel-component/src/styles/App.css';
 import Carousel from './carousel-component/src/components/Carousel';
