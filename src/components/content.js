@@ -30,13 +30,15 @@ export const slides = [
     content: (
       <article
         style={{
-          height: '70%',
-          width: '80%',
-          margin: '10%',
-          padding: '5%',
+          display: 'flex',
+          height: '70vh',
+          width: '70%',
+          padding: '5vw',
           overflow: 'auto',
           border: '3px solid #2196f3',
+          lineHeight: '4vh',
           textAlign: 'justify',
+          justifyContent: 'space-around',
         }}
       >
         Studio Ghibli Inc. (Japanese: 株式会社スタジオジブリ) is a Japanese animation film studio
@@ -44,13 +46,9 @@ export const slides = [
         and has also produced several short films, television commercials, and one television film.
         It was founded on June 15, 1985 by directors Hayao Miyazaki and Isao Takahata and producer
         Toshio Suzuki, after the success of Topcraft's anime film Nausicaä of the Valley of the Wind
-        (1984). Studio Ghibli has also collaborated with video game studios on the visual
-        development of several video games. Six of Studio Ghibli's films are among the 10
-        highest-grossing anime films made in Japan, with Spirited Away (2001) being the second
-        highest, grossing over US$360 million worldwide. Many of their works have won the Animage
-        Anime Grand Prix award, and four have won the Japan Academy Prize for Animation of the Year.
-        Five of Studio Ghibli's films have received Academy Award nominations. Spirited Away won the
-        Golden Bear in 2002 and the Academy Award for Best Animated Feature Film in 2003.
+        (1984). Six of Studio Ghibli's films are among the 10 highest-grossing anime films made in
+        Japan, with Spirited Away (2001) being the second highest, grossing over US$360 million
+        worldwide.
       </article>
     ),
   },
