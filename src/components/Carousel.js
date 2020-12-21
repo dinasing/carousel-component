@@ -39,6 +39,7 @@ export default class Carousel extends Component {
   };
 
   handleMouseDown = e => {
+    e.preventDefault();
     this.lastTouch = e.pageX;
     this.isDragging = true;
   };
