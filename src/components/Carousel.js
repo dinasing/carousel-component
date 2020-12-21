@@ -150,8 +150,6 @@ export default class Carousel extends Component {
     const { currentItemIndex, x, transitionDuration, isSmallScreen } = this.state;
     const { slides, numberOfSlidesOnPage, numberOfSlidesOnPageMobile } = this.props;
 
-    let slidesWithFirstAndLastClones = this.copySlides(slides, numberOfSlidesOnPage);
-
     return (
       <>
         <div
@@ -161,7 +159,7 @@ export default class Carousel extends Component {
           onTouchEnd={this.handleTouchEnd}
         >
           <Slides
-            slides={slidesWithFirstAndLastClones}
+            slides={this.copySlides(slides, numberOfSlidesOnPage)}
             currentItemIndex={currentItemIndex}
             x={x}
             transitionDuration={transitionDuration}
