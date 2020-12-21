@@ -57,6 +57,12 @@ export default class Carousel extends Component {
     this.isDragging = false;
   };
 
+  handleMouseLeave = e => {
+    this.lastTouch = 0;
+    this.isDragging = false;
+    this.handleMovementEnd(e);
+  };
+
   handleTouchMove = e => {
     const touchObject = e.changedTouches[0];
     const delta = ((this.lastTouch - touchObject.pageX) / window.screen.availWidth) * 100;
@@ -181,6 +187,7 @@ export default class Carousel extends Component {
           onMouseDown={this.handleMouseDown}
           onMouseMove={this.handleMouseMove}
           onMouseUp={this.handleMouseUp}
+          onMouseLeave={this.handleMouseLeave}
         >
           <Slides
             slides={this.copySlides(slides, numberOfSlidesOnPage)}
