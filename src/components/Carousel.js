@@ -135,7 +135,7 @@ export default class Carousel extends Component {
   };
 
   copySlides = (slides, numberOfSlidesOnPage) => {
-    let slidesWithClones = [...slides];
+    const slidesWithClones = [...slides];
 
     for (let index = 0; index < numberOfSlidesOnPage; index++) {
       slidesWithClones.push(slides[index]);
