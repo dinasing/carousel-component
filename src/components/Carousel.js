@@ -16,21 +16,12 @@ export default class Carousel extends Component {
       currentItemIndex: 1,
       transitionDuration: '0s',
       x: -100,
-      isSmallScreen: !window.matchMedia('(min-width: 640px)').matches,
     };
   }
 
-  componentDidMount() {
-    window.matchMedia('(min-width: 640px)').addEventListener('change', this.handleScreenSizeChange);
-  }
-
-  componentWillUnmount() {
-    window
-      .matchMedia('(min-width: 640px)')
-      .removeEventListener('change', this.handleScreenSizeChange);
-  }
-
-  handleScreenSizeChange = e => this.setState({ isSmallScreen: !e.matches });
+  isMobile = () => {
+    return /Mobi/i.test(navigator.userAgent);
+  };
 
   handleTouchStart = e => {
     const touchObject = e.changedTouches[0];
@@ -174,7 +165,7 @@ export default class Carousel extends Component {
   };
 
   render() {
-    const { currentItemIndex, x, transitionDuration, isSmallScreen } = this.state;
+    const { currentItemIndex, x, transitionDuration } = this.state;
     const { slides, numberOfSlidesOnPage, numberOfSlidesOnPageMobile } = this.props;
 
     return (
@@ -197,7 +188,7 @@ export default class Carousel extends Component {
             goToSlide={this.goToSlide}
             numberOfSlidesOnPage={numberOfSlidesOnPage}
             numberOfSlidesOnPageMobile={numberOfSlidesOnPageMobile}
-            isSmallScreen={isSmallScreen}
+            isMobile={this.isMobile()}
           />
         </div>
         <LinksContainer
