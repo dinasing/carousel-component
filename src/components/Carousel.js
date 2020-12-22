@@ -110,7 +110,7 @@ export default class Carousel extends Component {
   };
 
   checkIndex = index => {
-    const { slides, numberOfSlidesOnPage } = this.props;
+    const { slides } = this.props;
     index = index === 0 ? slides.length : index === slides.length + 1 ? 1 : index;
 
     return index;
