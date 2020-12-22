@@ -11,7 +11,7 @@ const Slide = props => {
   const minWidth = 100 / numberOfSlidesOnPage;
   return (
     <div
-      className={`slide`}
+      className="slide"
       style={{
         transform: `translateX(${x}%)`,
         transitionDuration,
