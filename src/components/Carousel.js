@@ -197,6 +197,10 @@ export default class Carousel extends Component {
           onMouseMove={this.handleMouseMove}
           onMouseUp={this.handleMouseUp}
           onMouseLeave={this.handleMouseLeave}
+          role="slider"
+          aria-valuenow="1"
+          tabIndex="-1"
+          aria-hidden="true"
         >
           <Slides
             slides={this.copySlides(slides, numberOfSlidesOnPage)}
