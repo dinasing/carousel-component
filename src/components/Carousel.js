@@ -17,7 +17,16 @@ export default class Carousel extends Component {
       currentItemIndex: 1,
       transitionDuration: '0s',
       x: -100,
+      isMobile: this.isMobile(),
     };
+  }
+
+  componentDidMount() {
+    window.matchMedia('(pointer:coarse)').addEventListener('change', () =>
+      this.setState({
+        isMobile: this.isMobile(),
+      })
+    );
   }
 
   isMobile = () => {
@@ -183,7 +192,7 @@ export default class Carousel extends Component {
   };
 
   render() {
-    const { currentItemIndex, x, transitionDuration } = this.state;
+    const { currentItemIndex, x, transitionDuration, isMobile } = this.state;
     const { slides, numberOfSlidesOnPage, numberOfSlidesOnPageMobile } = this.props;
 
     return (
@@ -210,7 +219,7 @@ export default class Carousel extends Component {
             goToSlide={this.goToSlide}
             numberOfSlidesOnPage={numberOfSlidesOnPage}
             numberOfSlidesOnPageMobile={numberOfSlidesOnPageMobile}
-            isMobile={this.isMobile()}
+            isMobile={isMobile}
           />
         </div>
         <LinksContainer
