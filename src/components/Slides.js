@@ -8,7 +8,7 @@ const Slides = props => {
     transitionDuration,
     numberOfSlidesOnPage,
     numberOfSlidesOnPageMobile,
-    isSmallScreen,
+    isMobile,
   } = props;
 
   return (
@@ -19,7 +19,7 @@ const Slides = props => {
           slide={slide}
           x={x}
           transitionDuration={transitionDuration}
-          numberOfSlidesOnPage={isSmallScreen ? numberOfSlidesOnPageMobile : numberOfSlidesOnPage}
+          numberOfSlidesOnPage={isMobile ? numberOfSlidesOnPageMobile : numberOfSlidesOnPage}
         />
       ))}
     </div>
