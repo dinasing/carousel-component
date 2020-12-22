@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Control from './Control';
 import LinksContainer from './LinksContainer';
 import Slides from './Slides';
@@ -95,7 +96,7 @@ export default class Carousel extends Component {
     this.lastTouch = 0;
   };
 
-  handleMovementEnd = e => {
+  handleMovementEnd = () => {
     const { x, currentItemIndex } = this.state;
     const endX = -x / 100;
     const remainder = endX % 1;
@@ -133,8 +134,8 @@ export default class Carousel extends Component {
     return index;
   };
 
-  changeCurrentItemIndexTo = (index, duration) => {
-    index = this.checkIndex(index);
+  changeCurrentItemIndexTo = (nextIndex, duration) => {
+    const index = this.checkIndex(nextIndex);
 
     this.setState({
       currentItemIndex: index,
@@ -220,3 +221,9 @@ export default class Carousel extends Component {
     );
   }
 }
+
+Carousel.propTypes = {
+  slides: PropTypes.arrayOf(PropTypes.object).isRequired,
+  numberOfSlidesOnPage: PropTypes.number.isRequired,
+  numberOfSlidesOnPageMobile: PropTypes.number.isRequired,
+};

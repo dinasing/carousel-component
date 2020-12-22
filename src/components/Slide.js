@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Slide = props => {
   const {
@@ -21,6 +22,13 @@ const Slide = props => {
       {content}
     </div>
   );
+};
+
+Slide.propTypes = {
+  slide: PropTypes.object.isRequired,
+  x: PropTypes.number.isRequired,
+  numberOfSlidesOnPage: PropTypes.number.isRequired,
+  transitionDuration: PropTypes.string.isRequired,
 };
 
 export default Slide;

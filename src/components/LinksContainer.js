@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import LinkToSlide from './LinkToSlide';
 
 export default function LinksContainer(props) {
@@ -18,3 +19,9 @@ export default function LinksContainer(props) {
 
   return <div className="links-container">{links}</div>;
 }
+
+LinksContainer.propTypes = {
+  currentItemIndex: PropTypes.number.isRequired,
+  length: PropTypes.number.isRequired,
+  goToSlide: PropTypes.func.isRequired,
+};
