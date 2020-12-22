@@ -79,7 +79,14 @@ export default class Carousel extends Component {
       slides: { length },
     } = this.props;
 
-    const x = nextX > 0 ? -100 * length : nextX < -100 * (length + 1) ? -100 : nextX;
+    let x;
+
+    if (nextX > 0) {
+      x = -100 * length;
+    } else if (nextX < -100 * (length + 1)) {
+      x = -100;
+    } else x = nextX;
+
     return x;
   };
 
@@ -109,9 +116,19 @@ export default class Carousel extends Component {
     }
   };
 
-  checkIndex = index => {
+  checkIndex = nextIndex => {
     const { slides } = this.props;
-    index = index === 0 ? slides.length : index === slides.length + 1 ? 1 : index;
+    let index;
+    switch (nextIndex) {
+      case 0:
+        index = slides.length;
+        break;
+      case slides.length + 1:
+        index = 1;
+        break;
+      default:
+        index = nextIndex;
+    }
 
     return index;
   };
