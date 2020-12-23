@@ -14,9 +14,9 @@ const Slides = props => {
 
   return (
     <div className="slides">
-      {slides.map((slide, index) => (
+      {slides.map(slide => (
         <Slide
-          key={`slide ${index}`}
+          key={`slide ${slide.id}`}
           slide={slide}
           x={x}
           transitionDuration={transitionDuration}
