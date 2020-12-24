@@ -19,6 +19,7 @@ import howl from '../../assets/images/howl049.jpg';
 
 export const slides = [
   {
+    id: '01',
     content: (
       <div style={{ background: 'tomato' }}>
         <img src={image0} style={{ width: '80%' }} />
@@ -27,6 +28,7 @@ export const slides = [
   },
 
   {
+    id: '02',
     content: (
       <article
         style={{
@@ -53,11 +55,13 @@ export const slides = [
     ),
   },
   {
+    id: '03',
     content: (
       <div>
         <Carousel
           slides={[
             {
+              id: '21',
               content: (
                 <div>
                   <a href="https://www.ghibli.jp/works/chihiro/#frame">
@@ -68,26 +72,31 @@ export const slides = [
               ),
             },
             {
+              id: '22',
               content: (
                 <iframe
                   style={{ width: 'auto', height: '80%' }}
                   src="https://www.youtube.com/embed/ByXuk9QqQkk"
-                  frameborder="0"
+                  frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen
-                ></iframe>
+                  allowFullScreen
+                />
               ),
             },
             {
+              id: '23',
               content: <img src={spiritedAway2} alt="" style={{ width: '80%' }} />,
             },
             {
+              id: '24',
               content: <img src={spiritedAway3} alt="" style={{ width: '80%' }} />,
             },
             {
+              id: '25',
               content: <img src={spiritedAway4} alt="" style={{ width: '80%' }} />,
             },
             {
+              id: '26',
               content: <img src={spiritedAway5} alt="" style={{ width: '80%' }} />,
             },
           ]}
@@ -97,13 +106,13 @@ export const slides = [
       </div>
     ),
   },
-  { content: <img src={kiki1} alt="" width="100%" height="auto" /> },
-  { content: <img src={kiki2} alt="" width="100%" height="auto" /> },
-  { content: <img src={kiki3} alt="" width="100%" height="auto" /> },
-  { content: <img src={mononoke1} alt="" width="100%" height="auto" /> },
-  { content: <img src={mononoke2} alt="" width="100%" height="auto" /> },
-  { content: <img src={totoro1} alt="" width="100%" height="auto" /> },
-  { content: <img src={totoro2} alt="" width="100%" height="auto" /> },
-  { content: <img src={umi} alt="" width="100%" height="auto" /> },
-  { content: <img src={howl} alt="" width="100%" height="auto" /> },
+  { id: '04', content: <img src={kiki1} alt="" width="100%" height="auto" /> },
+  { id: '05', content: <img src={kiki2} alt="" width="100%" height="auto" /> },
+  { id: '06', content: <img src={kiki3} alt="" width="100%" height="auto" /> },
+  { id: '07', content: <img src={mononoke1} alt="" width="100%" height="auto" /> },
+  { id: '08', content: <img src={mononoke2} alt="" width="100%" height="auto" /> },
+  { id: '09', content: <img src={totoro1} alt="" width="100%" height="auto" /> },
+  { id: '10', content: <img src={totoro2} alt="" width="100%" height="auto" /> },
+  { id: '11', content: <img src={umi} alt="" width="100%" height="auto" /> },
+  { id: '12', content: <img src={howl} alt="" width="100%" height="auto" /> },
 ];

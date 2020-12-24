@@ -82,6 +82,7 @@ module.exports = {
     new WorkboxPlugin.GenerateSW({
       clientsClaim: true,
       skipWaiting: true,
+      cleanupOutdatedCaches: true,
     }),
   ],
 };

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import LeftControl from './LeftControl';
+import PropTypes from 'prop-types';
+import Control from './Control';
 import LinksContainer from './LinksContainer';
-import RightControl from './RightControl';
 import Slides from './Slides';
 
 export default class Carousel extends Component {
@@ -9,31 +9,59 @@ export default class Carousel extends Component {
 
   lastTouch = 0;
 
+  isDragging = false;
+
   constructor(props) {
     super(props);
     this.state = {
       currentItemIndex: 1,
       transitionDuration: '0s',
       x: -100,
-      isSmallScreen: !window.matchMedia('(min-width: 640px)').matches,
+      isMobile: this.isMobile(),
     };
   }
 
   componentDidMount() {
-    window.matchMedia('(min-width: 640px)').addEventListener('change', this.handleScreenSizeChange);
+    window.matchMedia('(pointer:coarse)').addEventListener('change', () =>
+      this.setState({
+        isMobile: this.isMobile(),
+      })
+    );
   }
 
-  componentWillUnmount() {
-    window
-      .matchMedia('(min-width: 640px)')
-      .removeEventListener('change', this.handleScreenSizeChange);
-  }
-
-  handleScreenSizeChange = e => this.setState({ isSmallScreen: !e.matches });
+  isMobile = () => {
+    return /Mobi/i.test(navigator.userAgent);
+  };
 
   handleTouchStart = e => {
     const touchObject = e.changedTouches[0];
     this.lastTouch = touchObject.pageX;
+  };
+
+  handleMouseDown = e => {
+    e.preventDefault();
+    this.lastTouch = e.pageX;
+    this.isDragging = true;
+  };
+
+  handleMouseMove = e => {
+    if (this.isDragging) {
+      const delta = ((this.lastTouch - e.pageX) / window.screen.availWidth) * 100;
+      this.lastTouch = e.pageX;
+      this.handleMovement(delta);
+    }
+  };
+
+  handleMouseUp = e => {
+    this.handleMovementEnd(e);
+    this.lastTouch = 0;
+    this.isDragging = false;
+  };
+
+  handleMouseLeave = e => {
+    this.lastTouch = 0;
+    this.isDragging = false;
+    this.handleMovementEnd(e);
   };
 
   handleTouchMove = e => {
@@ -61,7 +89,14 @@ export default class Carousel extends Component {
       slides: { length },
     } = this.props;
 
-    const x = nextX > 0 ? -100 * length : nextX < -100 * (length + 1) ? -100 : nextX;
+    let x;
+
+    if (nextX > 0) {
+      x = -100 * length;
+    } else if (nextX < -100 * (length + 1)) {
+      x = -100;
+    } else x = nextX;
+
     return x;
   };
 
@@ -70,7 +105,7 @@ export default class Carousel extends Component {
     this.lastTouch = 0;
   };
 
-  handleMovementEnd = e => {
+  handleMovementEnd = () => {
     const { x, currentItemIndex } = this.state;
     const endX = -x / 100;
     const remainder = endX % 1;
@@ -91,15 +126,25 @@ export default class Carousel extends Component {
     }
   };
 
-  checkIndex = index => {
-    const { slides, numberOfSlidesOnPage } = this.props;
-    index = index === 0 ? slides.length : index === slides.length + 1 ? 1 : index;
+  checkIndex = nextIndex => {
+    const { slides } = this.props;
+    let index;
+    switch (nextIndex) {
+      case 0:
+        index = slides.length;
+        break;
+      case slides.length + 1:
+        index = 1;
+        break;
+      default:
+        index = nextIndex;
+    }
 
     return index;
   };
 
-  changeCurrentItemIndexTo = (index, duration) => {
-    index = this.checkIndex(index);
+  changeCurrentItemIndexTo = (nextIndex, duration) => {
+    const index = this.checkIndex(nextIndex);
 
     this.setState({
       currentItemIndex: index,
@@ -135,22 +180,23 @@ export default class Carousel extends Component {
   };
 
   copySlides = (slides, numberOfSlidesOnPage) => {
-    let slidesWithClones = [...slides];
+    const slidesWithClones = [...slides];
 
-    for (let index = 0; index < numberOfSlidesOnPage; index++) {
-      slidesWithClones.push(slides[index]);
+    for (let index = 0; index < numberOfSlidesOnPage; index += 1) {
+      slidesWithClones.push({ ...slides[index], id: `${slides[index].id} copy` });
     }
 
-    slidesWithClones.unshift(slides[slides.length - 1]);
+    slidesWithClones.unshift({
+      ...slides[slides.length - 1],
+      id: `${slides[slides.length - 1].id} copy`,
+    });
 
     return slidesWithClones;
   };
 
   render() {
-    const { currentItemIndex, x, transitionDuration, isSmallScreen } = this.state;
+    const { currentItemIndex, x, transitionDuration, isMobile } = this.state;
     const { slides, numberOfSlidesOnPage, numberOfSlidesOnPageMobile } = this.props;
-
-    let slidesWithFirstAndLastClones = this.copySlides(slides, numberOfSlidesOnPage);
 
     return (
       <>
@@ -159,16 +205,24 @@ export default class Carousel extends Component {
           onTouchStart={this.handleTouchStart}
           onTouchMove={this.handleTouchMove}
           onTouchEnd={this.handleTouchEnd}
+          onMouseDown={this.handleMouseDown}
+          onMouseMove={this.handleMouseMove}
+          onMouseUp={this.handleMouseUp}
+          onMouseLeave={this.handleMouseLeave}
+          role="slider"
+          aria-valuenow="1"
+          tabIndex="-1"
+          aria-hidden="true"
         >
           <Slides
-            slides={slidesWithFirstAndLastClones}
+            slides={this.copySlides(slides, numberOfSlidesOnPage)}
             currentItemIndex={currentItemIndex}
             x={x}
             transitionDuration={transitionDuration}
             goToSlide={this.goToSlide}
             numberOfSlidesOnPage={numberOfSlidesOnPage}
             numberOfSlidesOnPageMobile={numberOfSlidesOnPageMobile}
-            isSmallScreen={isSmallScreen}
+            isMobile={isMobile}
           />
         </div>
         <LinksContainer
@@ -177,9 +231,15 @@ export default class Carousel extends Component {
           currentItemIndex={currentItemIndex}
           numberOfSlidesOnPage={numberOfSlidesOnPage}
         />
-        <LeftControl onLeftButtonClick={this.onLeftButtonClick} />
-        <RightControl onRightButtonClick={this.onRightButtonClick} />
+        <Control handler={this.onLeftButtonClick} className="arrow left" icon="<" />
+        <Control handler={this.onRightButtonClick} className="arrow right" icon=">" />
       </>
     );
   }
 }
+
+Carousel.propTypes = {
+  slides: PropTypes.arrayOf(PropTypes.object).isRequired,
+  numberOfSlidesOnPage: PropTypes.number.isRequired,
+  numberOfSlidesOnPageMobile: PropTypes.number.isRequired,
+};
